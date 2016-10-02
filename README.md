@@ -41,6 +41,6 @@ At dashboard.heroku.com:
 
 At developers.line.me:
 
-- Basic information -> EDIT -> Webhook URL -> Fill it with `${APP_URL}/callback` -> SAVE
+- Basic information -> EDIT -> Webhook URL -> Fill it with `${APP_URL}/callback` -> SAVE -> VERIFY (ensure Success.)
 
 ### 5. Add LINE@ account to your friend. Talk to bot.
