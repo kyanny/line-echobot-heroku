@@ -1,0 +1,19 @@
+{
+  "name": "LINE echo",
+  "description": "Echo server for LINE BOT API",
+  "repository": "https://github.com/kyanny/line-echobot-heroku",
+  "keywords": ["line", "bot"],
+  "env": {
+    "LINE_CHANNEL_SECRET": {
+      "description": "Channel Secret",
+      "required": true
+    },
+    "LINE_CHANNEL_TOKEN": {
+      description: "Channel Access Token",
+      "required": true
+    }
+  },
+  "addons": [
+    "fixie:tricycle"
+  ]
+}
