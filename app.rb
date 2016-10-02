@@ -1,10 +1,36 @@
 require 'sinatra'   # gem 'sinatra'
 require 'line/bot'  # gem 'line-bot-api'
 
+class HTTPProxyClient
+
+  def http(uri)
+    require 'uri'
+    proxy_uri = URI(ENV["FIXIE_URL"])
+    http = Net::HTTP.new(uri.host, uri.port, proxy_uri.host, proxy_uri.port, proxy_uri.user, proxy_uri.password)
+    if uri.scheme == "https"
+      http.use_ssl = true
+    end
+
+    http
+  end
+
+  def get(url, header = {})
+    uri = URI(url)
+    http(uri).get(uri.request_uri, header)
+  end
+
+  def post(url, payload, header = {})
+    uri = URI(url)
+    http(uri).post(uri.request_uri, payload, header)
+  end
+
+end
+
 def client
   @client ||= Line::Bot::Client.new { |config|
     config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
     config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
+    config.httpclient = HTTPProxyClient.new
   }
 end
 
