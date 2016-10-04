@@ -35,7 +35,7 @@ class HTTPProxyClient
 end
 
 post '/callback' do
-  _client = Line::Bot::Client.new { |config|
+  client = Line::Bot::Client.new { |config|
     config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
     config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
     config.httpclient = HTTPProxyClient.new
