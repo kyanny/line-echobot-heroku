@@ -7,7 +7,14 @@ class HTTPProxyClient
     require 'uri'
     proxy_uri = URI(ENV["FIXIE_URL"])
     p proxy_uri
+    p [proxy_uri.host, proxy_uri.port, proxy_uri.user, proxy_uri.pass]
     http = Net::HTTP.new(uri.host, uri.port, proxy_uri.host, proxy_uri.port, proxy_uri.user, proxy_uri.password)
+    p [
+      http.instance_variable_get('@proxy_host'),
+      http.instance_variable_get('@proxy_port'),
+      http.instance_variable_get('@proxy_user'),
+      http.instance_variable_get('@proxy_pass'),
+    ]
     if uri.scheme == "https"
       http.use_ssl = true
     end
@@ -27,25 +34,13 @@ class HTTPProxyClient
 
 end
 
-before do
-  def client
-    _client = Line::Bot::Client.new { |config|
-      config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
-      config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
-      config.httpclient = HTTPProxyClient.new
-    }
-    p ['_client = ', _client,
-       _client.httpclient.instance_variable_get('@proxy_host'),
-       _client.httpclient.instance_variable_get('@proxy_port'),
-       _client.httpclient.instance_variable_get('@proxy_user'),
-       _client.httpclient.instance_variable_get('@proxy_pass'),
-      ]
-
-    _client
-  end
-end
-
 post '/callback' do
+  _client = Line::Bot::Client.new { |config|
+    config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
+    config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
+    config.httpclient = HTTPProxyClient.new
+  }
+
   body = request.body.read
 
   signature = request.env['HTTP_X_LINE_SIGNATURE']
