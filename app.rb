@@ -6,6 +6,7 @@ class HTTPProxyClient
   def http(uri)
     require 'uri'
     proxy_uri = URI(ENV["FIXIE_URL"])
+    p proxy_uri
     http = Net::HTTP.new(uri.host, uri.port, proxy_uri.host, proxy_uri.port, proxy_uri.user, proxy_uri.password)
     if uri.scheme == "https"
       http.use_ssl = true
@@ -57,6 +58,7 @@ post '/callback' do
         res = client.reply_message(event['replyToken'], message)
         p res
         p res.body
+        p client.httpclient.instance_eval('@proxy_pass')
       end
     end
   }
