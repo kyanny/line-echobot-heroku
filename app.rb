@@ -28,7 +28,12 @@ class HTTPProxyClient
 end
 
 def client
-  p ['@client = ', @client]
+  p ['@client = ', @client,
+     @client.httpclient.instance_variable_get('@proxy_host'),
+     @client.httpclient.instance_variable_get('@proxy_port'),
+     @client.httpclient.instance_variable_get('@proxy_user'),
+     @client.httpclient.instance_variable_get('@proxy_pass'),
+    ]
   @client ||= Line::Bot::Client.new { |config|
     config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
     config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
