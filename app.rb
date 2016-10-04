@@ -10,10 +10,10 @@ class HTTPProxyClient
     p [proxy_uri.host, proxy_uri.port, proxy_uri.user, proxy_uri.password]
     http = Net::HTTP.new(uri.host, uri.port, proxy_uri.host, proxy_uri.port, proxy_uri.user, proxy_uri.password)
     p [
-      http.instance_variable_get('@proxy_host'),
-      http.instance_variable_get('@proxy_port'),
-      http.instance_variable_get('@proxy_user'),
-      http.instance_variable_get('@proxy_pass'),
+      http.proxy_address,
+      http.proxy_port,
+      http.proxy_user,
+      http.proxy_pass,
     ]
     if uri.scheme == "https"
       http.use_ssl = true
@@ -63,7 +63,6 @@ post '/callback' do
         res = client.reply_message(event['replyToken'], message)
         p res
         p res.body
-        p client.httpclient.instance_eval('@proxy_pass')
       end
     end
   }
