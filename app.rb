@@ -7,7 +7,7 @@ class HTTPProxyClient
     require 'uri'
     proxy_uri = URI(ENV["FIXIE_URL"])
     p proxy_uri
-    p [proxy_uri.host, proxy_uri.port, proxy_uri.user, proxy_uri.pass]
+    p [proxy_uri.host, proxy_uri.port, proxy_uri.user, proxy_uri.password]
     http = Net::HTTP.new(uri.host, uri.port, proxy_uri.host, proxy_uri.port, proxy_uri.user, proxy_uri.password)
     p [
       http.instance_variable_get('@proxy_host'),
