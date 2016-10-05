@@ -4,12 +4,12 @@ require 'rest-client'
 
 class MyRestClient
   def get(url, headers = {})
-    RestClient.get(url, headers: header)
+    RestClient.get(url, headers: headers)
   end
 
   def post(url, payload, headers = {})
     p [url, payload, headers]
-    RestClient.post(url, payload, headers: header)
+    RestClient.post(url, payload, headers: headers)
   end
 end
 
