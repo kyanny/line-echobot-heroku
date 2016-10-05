@@ -6,7 +6,6 @@ module Line
     class HTTPClient
       def http(uri)
         proxy = URI(ENV["FIXIE_URL"])
-        p proxy
         http = Net::HTTP.new(uri.host, uri.port, proxy.host, proxy.port, proxy.user, proxy.password)
         if uri.scheme == "https"
           http.use_ssl = true
