@@ -8,6 +8,7 @@ class MyRestClient
   end
 
   def post(url, payload, header = {})
+    p [url, payload, header]
     RestClient.post(url, payload, header: header)
   end
 end
