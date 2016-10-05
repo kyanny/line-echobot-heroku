@@ -3,13 +3,13 @@ require 'line/bot'  # gem 'line-bot-api'
 require 'rest-client'
 
 class MyRestClient
-  def get(url, header = {})
-    RestClient.get(url, header: header)
+  def get(url, headers = {})
+    RestClient.get(url, headers: header)
   end
 
-  def post(url, payload, header = {})
-    p [url, payload, header]
-    RestClient.post(url, payload, header: header)
+  def post(url, payload, headers = {})
+    p [url, payload, headers]
+    RestClient.post(url, payload, headers: header)
   end
 end
 
