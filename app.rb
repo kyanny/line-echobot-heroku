@@ -1,14 +1,13 @@
 require 'sinatra'   # gem 'sinatra'
 require 'line/bot'  # gem 'line-bot-api'
-require 'httpclient'
 
-class MyClient < HTTPClient
-  def get(url, header={})
-    get_content(url, nil, header)
-  end
-
-  def post(url, payload, header={})
-    post_content(url, payload, header)
+module Line
+  module Bot
+    class HTTPClient
+      def http(uri)
+        raise uri.to_s
+      end
+    end
   end
 end
 
@@ -16,11 +15,6 @@ post '/callback' do
   client = Line::Bot::Client.new { |config|
     config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
     config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
-    # config.httpclient = HTTPProxyClient.new
-    # config.httpclient = MyRestClient.new
-    config.httpclient = MyClient.new(ENV["FIXIE_URL"])
-    proxy_uri = URI(ENV["FIXIE_URL"])
-    config.httpclient.set_proxy_auth(proxy_uri.user, proxy_uri.password)
   }
 
   body = request.body.read
