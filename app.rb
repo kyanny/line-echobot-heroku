@@ -5,7 +5,14 @@ module Line
   module Bot
     class HTTPClient
       def http(uri)
-        raise uri.to_s
+        proxy = URI(ENV["FIXIE_URL"])
+        p proxy
+        http = Net::HTTP.new(uri.host, uri.port, proxy.uri, proxy.port, proxy.user, proxy.password)
+        if uri.scheme == "https"
+          http.use_ssl = true
+        end
+
+        http
       end
     end
   end
