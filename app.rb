@@ -48,6 +48,8 @@ end
 
 configure do
   RestClient.proxy = ENV['FIXIE_URL']
+  require 'logger'
+  RestClient.log = Logger.new(STDOUT)
 end
 
 post '/callback' do
